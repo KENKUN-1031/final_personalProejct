@@ -5,3 +5,6 @@
 
 ### gitCloneしてきた時に最初にやること(laravelのファイル中)
 ```cp .env.example .env```
+
+### subModuleファイルができた時
+```git rm -rf --cached <対象ファイル>```
