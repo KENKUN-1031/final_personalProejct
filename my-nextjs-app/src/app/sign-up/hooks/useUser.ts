@@ -5,6 +5,7 @@ import { useCustomRouter } from '@/hooks/useCustomRouter'
 import { FirebaseRepository } from '@/repo/firebaseRepo'
 import { FirebaseInterface } from '@/types/interface/firebaseInterface'
 import firebase from 'firebase/compat/app'
+import axios from 'axios';
 
 // class dummyRepo implements FirebaseInterface{
 //   private static instance: FirebaseRepository | null = null
@@ -45,9 +46,22 @@ export const useUser = () => {
       const firebaseUser = await signupService.authGoogle();
       if(firebaseUser){
         setUser(firebaseUser)
-      }      
+      }
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  const handleLaravelLogin = async (data : string) => {
+    try {
+      const apiUrl = "http://localhost:8000/api/login"
+      const response = await axios.post(apiUrl, data);
+
+      console.log('Data sent correctly:', response.data);
+      return response.data;
+    } catch (error){
+      console.log("!!!!!!!!!!!!!!!!!!!");
+      console.log(error);
     }
   }
 
@@ -62,5 +76,5 @@ export const useUser = () => {
 
   }
   //下でreturnで返してあげてる
-  return {handleGoogleLogin,user,count,handleIncremment, handleMinus, handleLogout}
+  return {handleGoogleLogin,user,count,handleIncremment, handleMinus, handleLogout, handleLaravelLogin}
 }
